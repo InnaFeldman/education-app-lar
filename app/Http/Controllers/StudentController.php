@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Period;
 use App\Models\Student;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -65,6 +64,11 @@ class StudentController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchAllByPeriodAndByTeacher(Request $request, StudentService $studentService){
+        $request->validate([
+            'teacher_id' => 'required|integer',
+            'period_id' => 'required|integer'
+        ]);
+
         $students = $studentService->fetchAllByPeriodAndByTeacher($request);
 
         return response()->json($students);
@@ -75,6 +79,11 @@ class StudentController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function addStudentToPeriod(Request $request){
+        $request->validate([
+            'student_id' => 'required|integer',
+            'period_id' => 'required|integer'
+        ]);
+
         $student = Student::findOrFail($request['student_id']);
         $student->periods()->attach($request['period_id']);
 
@@ -86,6 +95,11 @@ class StudentController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function removeStudentToPeriod(Request $request){
+        $request->validate([
+            'student_id' => 'required|integer',
+            'period_id' => 'required|integer'
+        ]);
+
         $student = Student::findOrFail($request['student_id']);
         $student->periods()->detach($request['period_id']);
         return response()->json('Student has been removed successfully from the period', 200);

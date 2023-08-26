@@ -10,6 +10,7 @@ use Validator;
 
 class AuthController extends Controller
 {
+    const TOKEN_NAME = 'personal';
     /**
      * @param UserRequest $request
      * @param UserService $userService
@@ -18,7 +19,7 @@ class AuthController extends Controller
     public function register(UserRequest $request, UserService $userService)
     {
         $user = $userService->create($request);
-        $token = $user->createToken('personal')->accessToken;
+        $token = $user->createToken(self::TOKEN_NAME)->accessToken;
 
         return response()->json(['token' => $token], 201);
     }
@@ -29,12 +30,18 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $request->validate([
+            'user_name' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+
         if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
             $user = Auth::user();
-            $success['token'] =  $user->createToken('personal')->accessToken;
+            $success['token'] =  $user->createToken(self::TOKEN_NAME)->accessToken;
             $success['name'] =  $user->name;
 
-            return response()->json(['token'=>[$success['token'], 'message'=>'User login successfully.']]);
+            return response()->json(['token'=>[$success['token'], 'message'=>'User logged in successfully.']]);
         } else {
             return response()->json(['error' => 'Unauthoriz222ed'], 401);
         }

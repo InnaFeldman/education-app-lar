@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Teacher;
 use App\Models\User;
+use http\Env\Request;
 
 
 class TeacherService
@@ -11,7 +12,6 @@ class TeacherService
     /**
      * @param $request
      * @param $userService
-     * @return mixed
      */
     public function create($request, $userService) {
         $user = $userService->create($request);
@@ -27,9 +27,8 @@ class TeacherService
      * @param int $id
      * @param object $request
      * @param $userService
-     * @return mixed
      */
-    public function edit(int $id, object $request, $userService)
+    public function edit(int $id, $request, $userService)
     {
         $user = $userService->update($request, $id);
 
@@ -38,7 +37,6 @@ class TeacherService
 
     /**
      * @param int $id
-     * @return mixed
      */
     public function delete(int $id){
         $user = User::findOrFail($id);

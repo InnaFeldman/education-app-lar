@@ -11,7 +11,6 @@ class PeriodService
 
     /**
      * @param $request
-     * @return mixed
      */
     public function create($request) {
         $period = Period::create($request);
@@ -47,7 +46,6 @@ class PeriodService
      */
     public function fetchAllByTeacher(int $id){
         return Period::where('teacher_id', $id)
-            ->whereNull('deleted_at')
             ->get();
     }
 

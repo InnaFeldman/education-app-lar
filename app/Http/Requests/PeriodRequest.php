@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\TeacherExistsAndNotDeleted;
+use App\Rules\ExistingAndNotSoftDeleted;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -34,7 +34,7 @@ class PeriodRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'teacher_id' => ['required', new TeacherExistsAndNotDeleted('teachers')],
+            'teacher_id' => ['required', new ExistingAndNotSoftDeleted('teachers')],
         ];
     }
 }

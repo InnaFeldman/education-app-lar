@@ -9,6 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserRequest extends FormRequest
 {
+    const REGEX = '/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{15,30}$/';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,7 +35,7 @@ class UserRequest extends FormRequest
             'user_name' => 'required|string|unique:users',
             "full_name" => 'required|string|min:2|max:55',
             "email" => 'required|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|regex:'.self::REGEX,
             "role_id" => ['required', new ExistingAndNotSoftDeleted('roles')],
         ];
     }
