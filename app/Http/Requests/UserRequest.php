@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
             'user_name' => 'required|string|unique:users',
             "full_name" => 'required|string|min:2|max:55',
             "email" => 'required|email|max:255|unique:users',
-            'password' => 'required|regex:'.self::REGEX,
+            'password' => 'required|string',
             "role_id" => ['required', new ExistingAndNotSoftDeleted('roles')],
         ];
     }

@@ -39,9 +39,9 @@ class TeacherService
      * @param int $id
      */
     public function delete(int $id){
-        $user = User::findOrFail($id);
-        $teacher = Teacher::where('user_id', $user->id)->delete();
-        $user->delete();
+        $teacher = Teacher::findOrFail($id);
+        $user = User::where('id', $teacher->user_id)->delete();
+        $teacher->delete();
 
         return $teacher;
     }
