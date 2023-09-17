@@ -15,6 +15,8 @@ class StudentService
     /**
      * @param $request
      * @param $userService
+     * 1. Creates a user
+     * 2. Creates a student with the user id
      * @return mixed
      */
     public function create($request, $userService) {
@@ -24,14 +26,16 @@ class StudentService
             'grade' => $request['grade']
         ]);
 
-
         return $student;
-
     }
 
     /**
      * @param int $id
      * @param object $request
+     * 1. Finds student by id
+     * 2. Updates data in students table
+     * 3. Finds user by id from students table, user_id column
+     * 4.Updates the user data
      * @return mixed
      */
     public function edit(int $id, object $request)
@@ -47,26 +51,27 @@ class StudentService
             'role_id' => $request['user']['role_id']
         ]);
 
-
-
         return $student->with('user');
     }
 
     /**
      * @param int $id
+     * 1. Finds student by id
+     * 2. Gets from this object user id
+     * 3. Deletes the user
+     * 4. Deletes the student
      * @return mixed
      */
     public function delete(int $id){
         $student = Student::findOrFail($id);
         User::where('id', $student->user_id)->delete();
         $student->delete();
-
-        return $student;
     }
 
 
     /**
      * @param int $id
+     * Gets all students by a specific period
      * @return \Illuminate\Support\Collection
      */
     public function fetchAllByPeriod(int $id){
@@ -79,6 +84,7 @@ class StudentService
 
     /**
      * @param $request
+     * Gets all students by specific period and specific teacher
      * @return \Illuminate\Support\Collection
      */
     public function fetchAllByPeriodAndByTeacher($request){

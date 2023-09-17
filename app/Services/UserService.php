@@ -11,7 +11,8 @@ class UserService
 {
     /**
      * @param $request
-     * @return mixed
+     * Finds role by id
+     * Creates a user with the specific role
      */
     public function create($request) {
         $role = Role::where('id', $request['role_id'])->first();
@@ -29,7 +30,8 @@ class UserService
     /**
      * @param $request
      * @param int $id
-     * @return mixed
+     * Finds the user by id
+     * Updates the user
      */
     public function update($request, int $id){
         $user = User::findOrFail($id);

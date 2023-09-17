@@ -21,6 +21,8 @@ class PeriodService
      * @param int $id
      * @param $request
      * @return mixed
+     * 1. Find period by id
+     * 2. Updates the period
      */
     public function edit(int $id, $request){
         $period = Period::findOrFail($id);
@@ -34,6 +36,7 @@ class PeriodService
     /**
      * @param int $id
      * @return void
+     * Deletes the period
      */
     public function delete(int $id){
         $period = Period::findOrFail($id);
@@ -43,6 +46,7 @@ class PeriodService
     /**
      * @param int $id
      * @return mixed
+     * Gets all periods by teacher id
      */
     public function fetchAllByTeacher(int $id){
         return Period::where('teacher_id', $id)
