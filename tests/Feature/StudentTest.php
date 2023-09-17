@@ -130,7 +130,6 @@ class StudentTest extends TestCase
         $result = $studentService->fetchAllByPeriod($periodId);
 
         $this->assertNotEmpty($result);
-
         $this->assertEquals(1, $result[0]->student_id);
     }
 }
